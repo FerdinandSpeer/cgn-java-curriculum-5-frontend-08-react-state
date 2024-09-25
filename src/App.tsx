@@ -4,19 +4,29 @@ import WelcomePage from "./pages/Welcome.tsx";
 import RickAndMortyCharacters from "./pages/RickAndMortyCharacters.tsx";
 import CharacterDetailCard from "./pages/CharacterDetailCard.tsx";
 import CreateNewChar from "./pages/CreateNewChar.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Character} from "./types/RickAndMortyCharacter.ts";
-import {characters} from "./Characters.ts";
+import axios from "axios";
 
 
 
 export default function App() {
 
-    const [characterList, setCharacterList] = useState<Character[]>(characters);
+    const [dateRickAndMorty, setDataRickAndMorty] = useState<Character[]>([])
 
-    function addNewCharacter(newCharacter){
-        const updatedCharacterlist = [...characterList, newCharacter]
-        setCharacterList(updatedCharacterlist)
+useEffect(()=>{
+    axios.get("https://rickandmortyapi.com/api/character")
+        .then((response) => setDataRickAndMorty(response.data.results))
+        .catch((error) => console.error('Error fetching data:', error));}
+
+    ,[]);
+
+
+
+
+    function addNewCharacter(newCharacter: Character) {
+        const updatedCharacterlist = [...dateRickAndMorty, newCharacter]
+        setDataRickAndMorty(updatedCharacterlist)
     }
 
     return (
@@ -31,7 +41,7 @@ export default function App() {
 
             <Routes>
             <Route path={"/"} element={<WelcomePage/>}/>
-                <Route path={"/character"} element={<RickAndMortyCharacters characters={characterList}/>}/>
+                <Route path={"/character"} element={<RickAndMortyCharacters characters={dateRickAndMorty}/>}/>
                 <Route path={"/character/:id"} element={<CharacterDetailCard/>} />
                 <Route path={"/newcharacter"} element={<CreateNewChar saveNewCharacter={addNewCharacter} />} />
             </Routes>

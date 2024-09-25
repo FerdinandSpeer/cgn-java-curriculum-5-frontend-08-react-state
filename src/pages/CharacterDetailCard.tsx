@@ -1,4 +1,4 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {characters} from "../Characters.ts";
 
 export default function CharacterDetailCard() {
@@ -8,6 +8,7 @@ export default function CharacterDetailCard() {
 
 
     const singleCharCard = characters.find((char) => char.id == id)
+
 
     return(
         <>

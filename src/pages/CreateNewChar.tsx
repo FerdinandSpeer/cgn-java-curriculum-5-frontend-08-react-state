@@ -6,7 +6,7 @@ type character = {
     status: string
 }
 
-export default function CreateNewChar({saveNewCharacter}) {
+export default function CreateNewChar({saveNewCharacter}:{saveNewCharacter:character}) {
 const [nameInput, setName] = useState<string>('');
 const [speciesInput, setSpecies] = useState<string>('');
 const [statusInput, setStatus] = useState<string>('');
@@ -17,9 +17,11 @@ const [statusInput, setStatus] = useState<string>('');
     function handleChangeName(event: ChangeEvent<HTMLInputElement>) {
         setName(event.target.value);
     }
+
     function handleChangeSpecies(event: ChangeEvent<HTMLInputElement>) {
         setSpecies(event.target.value);
     }
+
     function handleChangeStatus(event: ChangeEvent<HTMLInputElement>) {
         setStatus(event.target.value);
     }
@@ -27,8 +29,7 @@ const [statusInput, setStatus] = useState<string>('');
     function handleSubmit(event: FormEvent) {
         event.preventDefault();
         const charToSave = {name: nameInput, species: speciesInput, status: statusInput}
-        saveNewCharacter(charToSave)
-
+            saveNewCharacter(charToSave);
     }
 
 
